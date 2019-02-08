@@ -11,31 +11,26 @@ GO
 
 CREATE TABLE [contacts] (
     [Id] int NOT NULL IDENTITY,
-    [Name] nvarchar(max) NOT NULL,
+    [FirstName] nvarchar(max) NOT NULL,
+    [LastName] nvarchar(max) NOT NULL,
     [Email] nvarchar(450) NULL,
+    [Gender] nvarchar(max) NOT NULL,
+    [IsFavorite] bit NOT NULL,
+    [Created] datetime2 NOT NULL,
     CONSTRAINT [PK_contacts] PRIMARY KEY ([Id])
 );
 
 GO
 
-CREATE TABLE [contacts_addresses] (
-    [Id] int NOT NULL IDENTITY,
-    [Street] nvarchar(max) NOT NULL,
-    [State] nvarchar(max) NOT NULL,
-    [ZipCode] nvarchar(max) NULL,
-    [ContactId] int NOT NULL,
-    CONSTRAINT [PK_contacts_addresses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_contacts_addresses_contacts_ContactId] FOREIGN KEY ([ContactId]) REFERENCES [contacts] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
-CREATE TABLE [contacts_phones] (
-    [Id] int NOT NULL IDENTITY,
-    [Phone] nvarchar(max) NOT NULL,
-    [ContactId] int NOT NULL,
-    CONSTRAINT [PK_contacts_phones] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_contacts_phones_contacts_ContactId] FOREIGN KEY ([ContactId]) REFERENCES [contacts] ([Id]) ON DELETE CASCADE
+CREATE TABLE [contacts_info] (
+    [Id] int NOT NULL,
+    [Company] nvarchar(max) NOT NULL,
+    [Avatar] nvarchar(max) NULL,
+    [Address] nvarchar(max) NULL,
+    [Phone] nvarchar(max) NULL,
+    [Comments] nvarchar(max) NULL,
+    CONSTRAINT [PK_contacts_info] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_contacts_info_contacts_Id] FOREIGN KEY ([Id]) REFERENCES [contacts] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -44,16 +39,8 @@ CREATE UNIQUE INDEX [IX_contacts_Email] ON [contacts] ([Email]) WHERE [Email] IS
 
 GO
 
-CREATE INDEX [IX_contacts_addresses_ContactId] ON [contacts_addresses] ([ContactId]);
-
-GO
-
-CREATE INDEX [IX_contacts_phones_ContactId] ON [contacts_phones] ([ContactId]);
-
-GO
-
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190207224403_initial', N'2.1.4-rtm-31024');
+VALUES (N'20190208130843_initial', N'2.1.4-rtm-31024');
 
 GO
 

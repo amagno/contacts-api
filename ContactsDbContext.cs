@@ -11,8 +11,7 @@ namespace ContactsAPI
         }
 
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<ContactAddress> ContactsAddresses { get; set; }
-        public DbSet<ContactPhone> ContactsPhones { get; set; }
+        public DbSet<ContactInfo> ContactsInfos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,16 +20,10 @@ namespace ContactsAPI
                 .HasIndex(p => p.Email)
                 .IsUnique();
             modelBuilder
-                .Entity<ContactAddress>()
+                .Entity<ContactInfo>()
                 .HasOne<Contact>()
-                .WithMany(c => c.Addresses)
-                .HasForeignKey("ContactId")
-                .IsRequired();
-            modelBuilder
-                .Entity<ContactPhone>()
-                .HasOne<Contact>()
-                .WithMany(c => c.Phones)
-                .HasForeignKey("ContactId")
+                .WithOne(c => c.Info)
+                .HasForeignKey<ContactInfo>(c => c.Id)
                 .IsRequired();
         }
     }
