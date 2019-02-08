@@ -52,6 +52,8 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// Obter todos os contatos.
         /// </summary>
+        /// <param name="limit">Limite de resultado (items por página)</param>
+        /// <param name="skip">Pular resultados</param>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetAllContacts([FromQuery] int? limit, [FromQuery] int? skip)
         {
@@ -82,6 +84,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// Obter um contato por id.
         /// </summary>
+        /// <param name="contactId">Id do contato</param>
         [HttpGet("{contactId:int}")]
         public async Task<ActionResult<Contact>> GetContact([FromRoute] int contactId)
         {
@@ -90,9 +93,11 @@ namespace ContactsAPI.Controllers
                 .Include(c => c.Info)
                 .FirstOrDefaultAsync();
         }
+
         /// <summary>
         /// Criar um novo contato.
         /// </summary>
+        /// <param name="model">Dados</param>
         [HttpPost]
         public async Task<ActionResult> AddContact([FromBody] ContactViewModel model)
         {
@@ -126,6 +131,8 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// Atualizar um contato por id.
         /// </summary>
+        /// <param name="contactId">Id do contato</param>
+        /// <param name="model">Dados</param>
         [HttpPut("{contactId:int}")]
         public async Task<ActionResult<Contact>> UpdateContact([FromRoute] int contactId, [FromBody] ContactViewModel model)
         {
@@ -168,6 +175,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// Remove um contato por id.
         /// </summary>
+        /// <param name="contactId">Id do contato</param>
         [HttpDelete("{contactId:int}")]
         public async Task<ActionResult> RemoveContact([FromRoute] int contactId)
         {
