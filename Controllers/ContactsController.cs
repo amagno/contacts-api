@@ -65,12 +65,6 @@ namespace ContactsAPI.Controllers
                 .Take((int)limit)
                 .ToListAsync();
             }
-             if (limit == null && skip != null)
-            {
-                return await query
-                .Skip((int)skip)
-                .ToListAsync();
-            }
             if (limit != null && skip != null)
             {
                 return await query
