@@ -55,24 +55,28 @@ namespace ContactsAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetAllContacts([FromQuery] int? limit, [FromQuery] int? skip)
         {
+            var query = _db.Contacts.Include(c => c.Info);
+
             if (limit != null && skip == null)
             {
-                return await _db.Contacts
-                .Include(c => c.Info)
+                return await query
                 .Take((int)limit)
+                .ToListAsync();
+            }
+             if (limit == null && skip != null)
+            {
+                return await query
+                .Skip((int)skip)
                 .ToListAsync();
             }
             if (limit != null && skip != null)
             {
-                return await _db.Contacts
-                .Include(c => c.Info)
-                .Take((int)limit)
+                return await query
                 .Skip((int)skip)
+                .Take((int)limit)
                 .ToListAsync();
             }
-
-            return await _db.Contacts
-                .Include(c => c.Info)
+            return await query
                 .ToListAsync();
         }
         /// <summary>
