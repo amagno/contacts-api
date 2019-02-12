@@ -55,6 +55,11 @@ namespace ContactsAPI
                 app.UseHsts();
             }
             app.UseSwagger();
+            app.UseCors(c => {
+                c.AllowAnyHeader();
+                c.AllowAnyOrigin();
+                c.AllowAnyMethod();
+            });
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
