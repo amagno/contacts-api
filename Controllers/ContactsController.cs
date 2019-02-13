@@ -21,12 +21,19 @@ namespace ContactsAPI.Controllers
         }
      
         /// <summary>
-        /// Gera contatos aleartoriamente.
+        /// Gera contatos aleartoriamente. (Máximo 400)
         /// </summary>
         [HttpGet("generate/{qtd?}")]
         public async Task<ActionResult<IEnumerable<Contact>>> GenerateContacts([FromRoute] int qtd = 1)
         {
-                
+            
+            var all = await _db.Contacts.ToListAsync();
+
+            if (all.Count > 400)
+            {
+                return BadRequest("reached the maximum number of contacts");
+            }
+
             var fakeInfo = new Faker<ContactInfo>()
                 .RuleFor(c => c.Avatar, (f, c) => f.Internet.Avatar())
                 .RuleFor(c => c.Company, (f, c) => f.Company.CompanyName())
