@@ -23,6 +23,8 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// Gera contatos aleartoriamente.
         /// </summary>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpGet("generate/{qtd?}")]
         public async Task<ActionResult<IEnumerable<Contact>>> GenerateContacts([FromRoute] int qtd = 1)
         {
@@ -54,6 +56,7 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="limit">Limite de resultado (items por página)</param>
         /// <param name="skip">Pular resultados</param>
+        [ProducesResponseType(200)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetAllContacts([FromQuery] int? limit, [FromQuery] int? skip)
         {
@@ -79,6 +82,8 @@ namespace ContactsAPI.Controllers
         /// Obter um contato por id.
         /// </summary>
         /// <param name="contactId">Id do contato</param>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [HttpGet("{contactId:int}")]
         public async Task<ActionResult<Contact>> GetContact([FromRoute] int contactId)
         {
@@ -92,6 +97,8 @@ namespace ContactsAPI.Controllers
         /// Criar um novo contato.
         /// </summary>
         /// <param name="model">Dados</param>
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         [HttpPost]
         public async Task<ActionResult> AddContact([FromBody] ContactViewModel model)
         {
@@ -127,6 +134,8 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="contactId">Id do contato</param>
         /// <param name="model">Dados</param>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpPut("{contactId:int}")]
         public async Task<ActionResult<Contact>> UpdateContact([FromRoute] int contactId, [FromBody] ContactViewModel model)
         {
@@ -170,6 +179,8 @@ namespace ContactsAPI.Controllers
         /// Remove um contato por id.
         /// </summary>
         /// <param name="contactId">Id do contato</param>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpDelete("{contactId:int}")]
         public async Task<ActionResult> RemoveContact([FromRoute] int contactId)
         {
