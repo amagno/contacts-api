@@ -8,9 +8,9 @@ namespace ContactsAPI.Models
     [Table("contacts")]
     public class Contact
     {
-        protected Contact() 
+        public Contact() 
         {
-            Info = new ContactInfo();
+            Created = DateTime.Now;
         }
         public Contact(
             string firstName, 

@@ -146,7 +146,10 @@ namespace ContactsAPI.Controllers
         [HttpPut("{contactId:int}")]
         public async Task<ActionResult<Contact>> UpdateContact([FromRoute] int contactId, [FromBody] ContactViewModel model)
         {
-            var contact = await _db.Contacts.FindAsync(contactId);
+            var contact = await _db
+                .Contacts
+                .Include(c => c.Info)
+                .FirstOrDefaultAsync(c => c.Id == contactId);
 
             if (contact == null)
             {
