@@ -30,7 +30,7 @@ namespace ContactsAPI.Models
             LastName = lastName;
             Email = email;
             Gender = gender;
-            IsFavorite = IsFavorite;
+            IsFavorite = isFavorite;
             Created = DateTime.Now;
             Info = new ContactInfo
             {
